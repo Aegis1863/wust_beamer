@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.6.18)  15 JAN 2024 01:04
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.6.18)  15 JAN 2024 17:58
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1378,8 +1378,14 @@ LaTeX Font Info:    Font shape `T1/calligra/m/n' will be
 \openout8 = `slide.snm'.
 
  (./slide.aux)
-Package rerunfilecheck Info: File `slide.out' has not changed.
-(rerunfilecheck)             Checksum: E8E5A716F73A3EA212240C9CB46BB019;643.
+
+Package rerunfilecheck Warning: File `slide.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `slide.out':
+(rerunfilecheck)             Before: E8E5A716F73A3EA212240C9CB46BB019;643
+(rerunfilecheck)             After:  DDB206101A589A0B883E3ACDF2AC5665;611.
  ) 
 Here is how much of TeX's memory you used:
  31262 strings out of 476683
