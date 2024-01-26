@@ -33,8 +33,11 @@
 
 \useinnertheme{circles}
 
+\setbeamertemplate{blocks}[rounded][shadow=true]
 %\useoutertheme{default}
 %\useinnertheme[shadow=true]{rounded}
+\xdefinecolor{notetitle}{rgb}{0.48, 0.65, 0.44}
+\xdefinecolor{notebody}{rgb}{0.82, 0.95, 0.78}
 \xdefinecolor{tsinghua}{rgb}{0.05, 0.44, 0.29}
 \setbeamercolor{footline}{bg=tsinghua}
 \setbeamercolor{frametitle}{bg=tsinghua,fg=white}
@@ -52,7 +55,8 @@
 \setbeamercolor{titlelike}{parent=palette primary}
 
 %% try
-\setbeamercolor{block title}{bg=tsinghua,fg=white}
+\setbeamercolor{block title}{bg=notetitle,fg=white}
+\setbeamercolor{block body}{bg=notebody}
 \setbeamercolor*{block title example}{use={normal text,example text},bg=white,fg=tsinghua}
 \setbeamercolor{fine separation line}{}
 \setbeamercolor{item projected}{fg=white}
