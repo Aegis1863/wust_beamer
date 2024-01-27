@@ -2,26 +2,19 @@
 \documentclass{beamer}
 \usepackage{ctex, hyperref}
 \usepackage[T1]{fontenc}
-\graphicspath{{pic/}}
-\usefonttheme[onlymath]{serif} % 改格式字体
+\graphicspath{{pic/}}  % 定义图片路径
+\usefonttheme[onlymath]{serif} % 改公式字体为衬线
 % other packages
 \usepackage{latexsym, amsmath, amsfonts, xcolor, multicol, booktabs, calligra}
 \usepackage{graphicx, pstricks, listings, stackengine}
 
 \author[Sunbowen Lee]{李孙博闻}
-\title[Graph neural network]{图神经网络的温和入门}
+\title[Graph neural network]{图卷积神经网络温和入门}
 % \subtitle{图神经网络介绍}
 \institute{武汉科技大学 \\ 理学院 \\ 冶金工业过程系统科学湖北省重点实验室}
 \date{\today}
-\usepackage{wust}
 
-% 定义颜色
-\def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
-\def\env#1{\texttt{\color{blue}\footnotesize #1}}
-\definecolor{deepblue}{rgb}{0,0,0.5}
-\definecolor{deepred}{rgb}{0.6,0,0}
-\definecolor{deepgreen}{rgb}{0.05, 0.44, 0.29}  % 青山绿
-\definecolor{lightblue}{rgb}{0.63, 0.80, 0.86}  % 沁湖蓝
+\usepackage{wust}  % 使用WUST风格模板
 
 \lstset{
     basicstyle=\ttfamily\small,
@@ -36,7 +29,7 @@
 
 \begin{document}
 
-\songti % 楷体字
+\songti % 字体
 \setsansfont{Times New Roman} % 英文衬线
 
 \begin{frame}  % 封面
@@ -51,16 +44,15 @@
 \begin{frame}{前言}
     尽管图网络具体实现可通过简单调包实现, 但在此之前仍然需要了解图的基础知识, 特别是``图嵌入''和``信息传递''的概念. \newline
 
-    本幻灯片材料主要参考Sanchez-Lengeling\cite{sanchez-lengeling2021a}等人的论文.
+    本幻灯片材料主要参考Sanchez-Lengeling\cite{sanchez-lengeling2021a}等人的论文。
 \end{frame}
 
-\begin{frame}{目录}
-    \tableofcontents
+\begin{frame}{目录}\small
+    \tableofcontents[subsectionstyle=hide]
 \end{frame}
 
 \AtBeginSubsection[]{
-    \begin{frame}{目录}
-        \frametitle{当前节}
+    \begin{frame}
         \tableofcontents[currentsubsection]
     \end{frame}
 }
@@ -72,20 +64,22 @@
 \begin{frame}{Vertex, Edge and Global}
     \begin{figure}
         \includegraphics[width=\textwidth]{vertex.png}
+        \caption{节点，节点一般有自己的特征。}
     \end{figure}
 \end{frame}
 
 \begin{frame}{Vertex, Edge and Global}
     \begin{figure}
         \includegraphics[width=\textwidth]{edge.png}
+        \caption{边，节点一般也有自己的特征。}
     \end{figure}
 \end{frame}
 
 \begin{frame}{Vertex, Edge and Global}
     \begin{figure}
         \includegraphics[width=\textwidth]{global.png}
+        \caption{全局特征，做图分类任务的时候存在。}
     \end{figure}
-    注意全局用U而非G表示.
 \end{frame}
 
 \begin{frame}{Vertex, Edge and Global}
@@ -291,6 +285,7 @@
 
 \begin{frame}{方法一}
     \small
+    \vspace{-1cm}
     \begin{multicols}{2}
         \[
             A =
@@ -367,6 +362,7 @@
 \end{frame}
 
 \begin{frame}{方法三: 最常用的图卷积方法}\footnotesize
+    \vspace{-0.5cm}
     \begin{multicols}{2}
         \[
             D =
@@ -397,28 +393,29 @@
         \]
         \[
             \tilde{L} = \begin{bmatrix}
-                1                  & \frac{1}{\sqrt{6}} & 0                  & \frac{1}{\sqrt{2}} \\
-                \frac{1}{\sqrt{6}} & 1                  & \frac{1}{\sqrt{3}} & \frac{1}{\sqrt{2}} \\
-                0                  & \frac{1}{\sqrt{3}} & 1                  & 0                  \\
-                \frac{1}{\sqrt{2}} & \frac{1}{\sqrt{2}} & 0                  & 1
+                1                   & -\frac{1}{\sqrt{6}} & 0                   & -\frac{1}{2}        \\
+                -\frac{1}{\sqrt{6}} & 1                   & -\frac{1}{\sqrt{3}} & -\frac{1}{\sqrt{6}} \\
+                0                   & -\frac{1}{\sqrt{3}} & 1                   & 0                   \\
+                -\frac{1}{2}        & -\frac{1}{\sqrt{6}} & 0                   & 1
             \end{bmatrix}
         \]
 
     \end{multicols}
     前面已经介绍了$L$的公式: $L=D-A$, 可以通过度矩阵标准化A, 然后给出$\tilde{L}$, 这里给出标准化公式:
     $$ \tilde{L} = D^{-\frac{1}{2}}(D-A)D^{-\frac{1}{2}} = I - D^{-\frac{1}{2}}AD^{-\frac{1}{2}} $$
-    通过标准化, 将度和邻接表示进行放缩, 其中度放缩到1, 从而避免了了数值太大影响分类效果.\\
+    通过标准化, 将度和邻接表示进行放缩, 其中度被放缩到1, 从而避免了了数值太大影响分类效果.\\
 \end{frame}
 
 \begin{frame}{方法三: 最常用的图卷积方法}
     最后,给出最常见的图卷积表达式:
     $$H^{(t+1)} = \sigma(\tilde{L}H^{(t)}W^{(t)})$$
+    在图卷积中，由于每次卷积都是在聚合邻居的信息，因此每一对邻居节点都可以依据自身的特征给对方分配一个注意力分数，这就是图卷积注意力方法。
+    \newline
 
     现在你可以调包了:)
     \newline
 
     PyTorch Geometric是图网络常用的包之一
-    
     \url{https://pytorch-geometric.readthedocs.io/en/latest/index.html}
 \end{frame}
 
@@ -428,7 +425,7 @@
     \begin{itemize}
         \item 图需要转化为嵌入向量才能被处理;
         \item 图非常擅长描述具有拓扑结构的数据;
-        \item 图神经网络的特点在于信息传递;
+        \item 图神经网络的特点在于信息传递。
     \end{itemize}
 \end{frame}
 
