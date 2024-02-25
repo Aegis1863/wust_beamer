@@ -1,0 +1,8 @@
+*.abs
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.pdfsync
+*.gz
