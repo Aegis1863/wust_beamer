@@ -4,6 +4,18 @@
 
 本项目修改自[新版大连理工大学主题](https://github.com/fuujiro/DLUT-Beamer-Slide-V2)和[清华大学主题](https://github.com/tuna/THU-Beamer-Theme)。
 
+## 编译方法
+
+在latex编译时采用 `xelatex-bibtext-xelatex*2`, 否则存在报错.
+
+## 内容说明
+
+- ref.bib 整理参考文献，在引用论文时把bib格式的cite放在这里
+- slide.tex 幻灯片tex文件，在这里编辑幻灯片主要内容
+- WUST.sty 武汉科技大学主题配置文件
+- pic文件夹 用于存放图片，原本存放图片均为展示用途，可删除
+- 如有其他文件为编译中间文件，非必要
+
 ## 该模板适用于:
 
 - 本科、研究生和博士论文答辩
@@ -16,14 +28,6 @@
 - 一点点编程技能
 - 一点点LaTeX经验
 - 不怕丢脸
-
-## 内容说明
-
-- ref.bib 整理参考文献，在引用论文时把bib格式的cite放在这里
-- slide.tex 幻灯片tex文件，在这里编辑幻灯片主要内容
-- WUST.sty 武汉科技大学主题配置文件
-- pic文件夹 用于存放图片，原本存放图片均为展示用途，可删除
-- 如有其他文件为编译中间文件，非必要
 
 ## 内容展示
 
